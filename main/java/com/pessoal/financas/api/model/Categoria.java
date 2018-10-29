@@ -5,6 +5,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 
 @Entity
@@ -15,6 +17,8 @@ public class Categoria {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long codigo;
 	
+	@Size(min = 3, max = 40)
+	@NotNull
 	private String nome;
 	
 	public Long getCodigo() {
