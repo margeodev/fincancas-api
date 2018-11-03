@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.pessoal.financas.api.event.RecursoCriadoEvent;
 import com.pessoal.financas.api.model.Lancamento;
 import com.pessoal.financas.api.repository.Lancamentos;
+import com.pessoal.financas.api.service.LancamentoService;
 
 @RestController
 @RequestMapping("/lancamentos")
@@ -26,6 +27,9 @@ public class LancamentoResource {
 
 	@Autowired
 	private Lancamentos lancamentos;
+	
+	@Autowired
+	private LancamentoService lancamentoService;
 	
 	@GetMapping
 	public List<Lancamento> listar() {
@@ -42,7 +46,7 @@ public class LancamentoResource {
 	
 	@PostMapping
 	public ResponseEntity<Lancamento> criar(@Valid @RequestBody Lancamento lancamento, HttpServletResponse response) {
-		Lancamento lancamentoSalvo = lancamentos.save(lancamento);
+		Lancamento lancamentoSalvo = lancamentoService.salvar(lancamento);
 		publisher.publishEvent(new RecursoCriadoEvent(this, response, lancamentoSalvo.getCodigo()));
 		
 		return ResponseEntity.status(HttpStatus.CREATED).body(lancamentoSalvo);	
