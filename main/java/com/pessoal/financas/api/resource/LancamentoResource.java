@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.pessoal.financas.api.event.RecursoCriadoEvent;
 import com.pessoal.financas.api.model.Lancamento;
 import com.pessoal.financas.api.repository.Lancamentos;
+import com.pessoal.financas.api.repository.filter.LancamentoFilter;
 import com.pessoal.financas.api.service.LancamentoService;
 
 @RestController
@@ -32,8 +33,8 @@ public class LancamentoResource {
 	private LancamentoService lancamentoService;
 	
 	@GetMapping
-	public List<Lancamento> listar() {
-		return lancamentos.findAll();
+	public List<Lancamento> pesquisar(LancamentoFilter lancamentoFilter) {
+		return lancamentos.filtrar(lancamentoFilter);
 	}
 	
 	@Autowired
